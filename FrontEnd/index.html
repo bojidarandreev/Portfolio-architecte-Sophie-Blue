@@ -32,6 +32,49 @@
 		</nav>
 	</header>
 	<main>
+		<section id="modifying-window" class="not-visible-modWindow">
+			<div class="window">
+				<div class="window-nav">
+					<a href="#" class="backBtn backBtn-not-visible"></a>
+					<a href="#" class="closeWindowBtn closeBtn"></a>
+				</div>
+				<h2 class="window-title">Galerie photo</h2>
+				<div class="window-mod-form">
+					<div class="window-gallery"></div>
+
+					<form id="image-form" class="not-visible-form" action="#" method="POST"
+						enctype="multipart/form-data">
+
+						<div class="uploadPhoto">
+							<img src="assets/icons/empty-image.svg" id="upload-image-preview" alt="Image for upload">
+							<label id="uploadPhotoText" class="hideUploadElement" for="photo">+ Ajouter photo</label>
+							<input type="file" id="photo" name="image" required>
+							<p id="upload-instructions">jpg, png : 4mo max</p>
+						</div>
+
+
+						<label for="Titre">"Titre</label>
+						<input type="text" id="Titre" name="title" required>
+
+						<label for="category-select">Catégorie</label>
+
+						<select name="category" id="category-select" required>
+							<option value="">Choose an option</option>
+							<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hotels & restaurants</option>
+						</select>
+						<span class="line-separator-upload"></span>
+						<button id="uploadFormValidator" class="btn sendButton buttonGray" type="submit">Valider</button>
+					</form>
+				</div>
+				<span class="line-separator-delete"></span>
+				<button id="upload-formBTN" class="btn form-not-visible-modWindow">Ajouter une photo</button>
+			</div>
+			<div class="window-background">
+				<a href="#" class="closeBtn close-background"></a>
+			</div>
+		</section>
 		<div id="introduction">
 			<figure>
 				<img src="./assets/images/sophie-bluel.png" alt="">

@@ -407,7 +407,8 @@ footer nav ul {
 }
 
 .classSelected {
-	background: red;
+	background: #0E2F28;
+	color: white;
 }
 
 .buttonGray {

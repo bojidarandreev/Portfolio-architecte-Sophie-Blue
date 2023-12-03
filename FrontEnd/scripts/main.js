@@ -1,7 +1,8 @@
 //---GALLERY-VISUALISATION
 const galleryElement = document.querySelector('.gallery');
 const portfolioElement = document.querySelector('#portfolio');
-
+const modifWindowSelector = document.querySelector('#modifying-window');
+const windowGalleryElement = document.querySelector('.window-gallery');
 
 
 // single source of truth
@@ -60,17 +61,62 @@ const createWork = (work) => {
 }
 
 
+//create modifying window works
+//AND CREATE DELETE BUTTON
+const createModWindowSingleWork = (work) => {
+    const figure = document.createElement('figure');
+    const img = document.createElement('img');
+    const figcaption = document.createElement('figcaption');
+    const deleteBtn = document.createElement('button');
+
+    deleteBtn.addEventListener('click', () => {
+        //console.log(`dellBtn nomber: ${work.id} is Pressed`)
+
+        const deletedImage = document.getElementById(work.id);
+        deletedImage.parentElement.remove();
+        delWork(work.id)
+        clearElements();
+
+
+
+
+    });
+
+    deleteBtn.classList.add('deleteBtn');
+    deleteBtn.setAttribute('id', work.id);
+    // deleteBtn.innerText = 'DEL';
+
+
+    // idImg = work.id;
+    img.src = work.imageUrl;
+    img.alt = work.title;
+    figure.appendChild(img);
+    figure.appendChild(deleteBtn);
+    figure.classList.add('single-project-tiny');
+
+    windowGalleryElement.appendChild(figure);
+}
+
+const createModWindowWorks = (works) => {
+
+    works.forEach(work => {
+
+        createModWindowSingleWork(work);
+
+    })
+}
+
 
 //---GALLERY-VISUALISATION-END
 
 const clearElements = async () => {
-    let forRemove = document.querySelectorAll(".gallery");
+    let forRemove = document.querySelectorAll(".window-gallery, .gallery");
     works = []
     galleryElement.innerHTML = '';
-    
+    windowGalleryElement.innerHTML = '';
     await getWorks();
     createWorks(works)
-    
+    createModWindowWorks(works)
 }
 
 
@@ -83,10 +129,42 @@ const init = async () => {
     await getCategories()
     createWorks(works)
     createFilters(works)
+    tokenCheckFunction()
 
 }
 //RUN ALL PRINCIPAL FUNCTIONS
 init()
+
+//TOKEN CHECKER 
+let tokenCheck = sessionStorage.getItem('token');
+const tokenCheckFunction = () => {
+
+    if (tokenCheck) {
+        document.querySelector("#loginBtn").innerHTML = "log out";
+        document.getElementById("edit-mode").classList.remove("editMode-not-visible");
+        console.log("The Token is Here!");
+        modifyProjectsBtn();
+        //Clear filtersContainer(filter buttons)
+        const forRemoveParent = document.querySelector('.filtersContainer');
+        forRemoveParent.remove();
+
+
+        const logOut = () => {
+            const logOutBtn = document.getElementById("loginBtn");
+            logOutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                sessionStorage.clear();
+                logOutBtn.innerHTML = "login";
+                document.getElementById("edit-mode").classList.add("editMode-not-visible");
+                //window.location.assign('/index.html')
+                location.reload()
+            })
+        }
+        logOut();
+
+
+    }
+}
 
 
 // CREATE FILTERS
@@ -158,4 +236,4 @@ const filterChoice = () => {
 
 
 
-document.getElementsByClassName('filterBtn').classList.remove('classSelected');
+//document.getElementsByClassName('filterBtn').classList.remove('classSelected');
